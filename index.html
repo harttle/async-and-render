@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title></title>
+</head>
+<body>
+  <style>h1{border-bottom: 1px dashed black;}</style>
+  <h1>Test Area</h1>
+  <h2>Loop for 10 seconds</h2>
+  <p><button id="btnWhile">While Loop</button></p>
+  <p><button id="btnSetTimeout">setTimeout</button></p>
+  <p><button id="btnRAF">RequestAnimationFrame</button></p>
+  <p><button id="btnPromise">Promise</button></p>
+  <h2>Switch background red and white</h2>
+  <p><button id="btnAdjBg">Adjacent Statements</button></p>
+  <p><button id="btnSetTimeoutBg">setTimeout</button></p>
+  <p><button id="btnRAFBg">RequestAnimationFrame</button></p>
+  <p><button id="btnPromiseBg">Promise</button></p>
+  <script>
+btnWhile.addEventListener('click', function () {
+  var state = start(btnWhile);
+  while(true) {
+    if (cb(state) === false) break;
+  }
+})
+
+btnRAF.addEventListener('click', function () {
+  var state = start(btnRAF);
+  fn();
+  function fn() {
+    requestAnimationFrame(function () {
+      if (cb(state) !== false) fn();
+    });
+  }
+})
+
+btnSetTimeout.addEventListener('click', function () {
+  var state = start(btnSetTimeout);
+  fn();
+  function fn() {
+    setTimeout(function () {
+      if (cb(state) !== false) fn();
+    });
+  }
+})
+btnPromise.addEventListener('click', function () {
+  var state = start(btnPromise);
+  var pending = Promise.resolve();
+  fn();
+  function fn() {
+    pending = pending.then(function(){
+      if (cb(state) !== false) fn();
+    });
+  }
+})
+btnAdjBg.addEventListener('click', function () {
+  document.body.style.background = 'red';
+  document.body.style.background = 'white';
+})
+btnSetTimeoutBg.addEventListener('click', function () {
+  document.body.style.background = 'red';
+  setTimeout(function () {
+    document.body.style.background = 'white';
+  })
+})
+btnRAFBg.addEventListener('click', function () {
+  requestAnimationFrame(function () {
+    document.body.style.background = 'red';
+    requestAnimationFrame(function () {
+      document.body.style.background = 'white';
+    })
+  })
+})
+btnPromiseBg.addEventListener('click', function () {
+  document.body.style.background = 'red';
+  Promise.resolve().then(function () {
+    document.body.style.background = 'white';
+  })
+})
+function start(btn) {
+  return {
+    startTime: Date.now(),
+    btnText: btn.innerText,
+    btn: btn,
+    count: 0
+  };
+}
+
+function cb(state) {
+  state.count++;
+  var ETA = 1e4 + state.startTime - Date.now();
+  state.btn.innerText = 'ETA: ' + Math.floor(ETA / 1000) + 's';
+  if (ETA <= 0) {
+    state.btn.innerText = state.btnText;
+    alert('done with ' + state.count + ' calls');
+    return false;
+  }
+}
+  </script>
+  <h1>Main Page</h1>
+  <textarea id="" name="" cols="30" rows="5">Porttitor id, facilisis in, consequat ut, libero.</textarea>
+  <div><button>An empty button</button></div>
+  <input type="text" value="a text input control">
+  <p>Porttitor id, facilisis in, consequat ut, libero.
+  Morbi imperdiet, magna quis ullamcorper malesuada, mi massa pharetra
+  lectus, a pellentesque urna urna id turpis. Nam posuere lectus vitae
+  nibh. Etiam tortor orci, sagittis malesuada, rhoncus quis, hendrerit
+  eget, libero. Quisque commodo nulla at nunc. Mauris consequat, enim vitae
+  venenatis sollicitudin, dolor orci bibendum enim, a sagittis nulla nunc
+  quis elit. Phasellus augue. Nunc suscipit, magna tincidunt lacinia
+  faucibus, lacus tellus ornare purus, a pulvinar lacus orci eget nibh.
+  Maecenas sed nibh non lacus tempor faucibus. In hac habitasse platea
+  dictumst. Vivamus a orci at nulla tristique condimentum. Donec arcu quam,
+  dictum accumsan.</p>
+  <p>Porttitor id, facilisis in, consequat ut, libero.
+  Morbi imperdiet, magna quis ullamcorper malesuada, mi massa pharetra
+  lectus, a pellentesque urna urna id turpis. Nam posuere lectus vitae
+  nibh. Etiam tortor orci, sagittis malesuada, rhoncus quis, hendrerit
+  eget, libero. Quisque commodo nulla at nunc. Mauris consequat, enim vitae
+  venenatis sollicitudin, dolor orci bibendum enim, a sagittis nulla nunc
+  quis elit. Phasellus augue. Nunc suscipit, magna tincidunt lacinia
+  faucibus, lacus tellus ornare purus, a pulvinar lacus orci eget nibh.
+  Maecenas sed nibh non lacus tempor faucibus. In hac habitasse platea
+  dictumst. Vivamus a orci at nulla tristique condimentum. Donec arcu quam,
+  dictum accumsan.</p>
+  <p>Porttitor id, facilisis in, consequat ut, libero.
+  Morbi imperdiet, magna quis ullamcorper malesuada, mi massa pharetra
+  lectus, a pellentesque urna urna id turpis. Nam posuere lectus vitae
+  nibh. Etiam tortor orci, sagittis malesuada, rhoncus quis, hendrerit
+  eget, libero. Quisque commodo nulla at nunc. Mauris consequat, enim vitae
+  venenatis sollicitudin, dolor orci bibendum enim, a sagittis nulla nunc
+  quis elit. Phasellus augue. Nunc suscipit, magna tincidunt lacinia
+  faucibus, lacus tellus ornare purus, a pulvinar lacus orci eget nibh.
+  Maecenas sed nibh non lacus tempor faucibus. In hac habitasse platea
+  dictumst. Vivamus a orci at nulla tristique condimentum. Donec arcu quam,
+  dictum accumsan.</p>
+  <p>Porttitor id, facilisis in, consequat ut, libero.
+  Morbi imperdiet, magna quis ullamcorper malesuada, mi massa pharetra
+  lectus, a pellentesque urna urna id turpis. Nam posuere lectus vitae
+  nibh. Etiam tortor orci, sagittis malesuada, rhoncus quis, hendrerit
+  eget, libero. Quisque commodo nulla at nunc. Mauris consequat, enim vitae
+  venenatis sollicitudin, dolor orci bibendum enim, a sagittis nulla nunc
+  quis elit. Phasellus augue. Nunc suscipit, magna tincidunt lacinia
+  faucibus, lacus tellus ornare purus, a pulvinar lacus orci eget nibh.
+  Maecenas sed nibh non lacus tempor faucibus. In hac habitasse platea
+  dictumst. Vivamus a orci at nulla tristique condimentum. Donec arcu quam,
+  dictum accumsan.</p>
+  <p>Porttitor id, facilisis in, consequat ut, libero.
+  Morbi imperdiet, magna quis ullamcorper malesuada, mi massa pharetra
+  lectus, a pellentesque urna urna id turpis. Nam posuere lectus vitae
+  nibh. Etiam tortor orci, sagittis malesuada, rhoncus quis, hendrerit
+  eget, libero. Quisque commodo nulla at nunc. Mauris consequat, enim vitae
+  venenatis sollicitudin, dolor orci bibendum enim, a sagittis nulla nunc
+  quis elit. Phasellus augue. Nunc suscipit, magna tincidunt lacinia
+  faucibus, lacus tellus ornare purus, a pulvinar lacus orci eget nibh.
+  Maecenas sed nibh non lacus tempor faucibus. In hac habitasse platea
+  dictumst. Vivamus a orci at nulla tristique condimentum. Donec arcu quam,
+  dictum accumsan.</p>
+</body>
+</html>
+
